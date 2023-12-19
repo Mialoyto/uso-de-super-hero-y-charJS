@@ -47,6 +47,19 @@ END $$
 CALL spu_publisher_search (3);
 
 
+-- SPU RESUMEN DE ALIGNMENT
+DELIMITER $$
+CREATE PROCEDURE spu_resumen_alignment()
+BEGIN
+	SELECT
+	AL.alignment,
+	COUNT(SH.id) AS 'total'
+	FROM superhero SH
+	LEFT JOIN alignment AL ON AL.id = SH.alignment_id
+	GROUP BY AL.id, AL.alignment
+	ORDER BY SH.alignment_id ASC;		
+END $$
+CALL spu_resumen_alignment;
 
 
 
