@@ -15,7 +15,7 @@
     <div class="card mt-2">
       <div class="card-header bg-secondary text-light">BUSCAR EMPLEADOS</div>
       <div class="card-body">
-        <form action="">
+        <form action="" id="listar-publisher">
           <div class="mb-3">
             <label for="_publisher_id" class="form-label">PUBLISHER :</label>
             <select name="" id="_publisher_id" class="form-control form-select shadow" required>
@@ -27,9 +27,9 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>NAME</th>
                   <th>FULL NAME</th>
-                  <th>NOMBRES</th>
                   <th>GENDER</th>
                   <th>RACE</th>
                 </tr>
@@ -73,27 +73,25 @@
         const publisherId = $('#_publisher_id')
         publisherId.addEventListener('change', function() {
           const id = publisherId.value
-
           fetch(`../controllers/publisher.controller.php?operacion=search&_publisher_id=${id}`)
             .then(respuesta => respuesta.json())
             .then(datos => {
-
-              console.log(datos)
+              
+              // console.log(datos)
               const tabla = $("#tabla");
+              tabla.textContent="";
 
               datos.forEach(datos => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
+                <td>${datos.id}</td>
                 <td>${datos.superhero_name}</td>
-
-                            <td>${datos.superhero_name}</td>
-                            <td>${datos.full_name}</td>
-                            <td>${datos.gender}</td>
-                            <td>${datos.race}</td>
-                        `;
+                <td>${datos.full_name}</td>
+                <td>${datos.gender}</td>
+                <td>${datos.race}</td>
+                  `;
                 tabla.appendChild(row);
-
-              });
+              });              
             })
             .catch(e => {
               console.error("Error en la consulta!", e)
