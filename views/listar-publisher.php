@@ -77,7 +77,7 @@
             .then(respuesta => respuesta.json())
             .then(datos => {
               
-              // console.log(datos)
+              console.log(datos)
               const tabla = $("#tabla");
               tabla.textContent="";
 

@@ -20,7 +20,7 @@ class Publisher extends Conexion
       die($e->getMessage());
     }
   }
-
+  // funcion para buscar
   public function buscarPublisherSH($data = [])
   {
     try {

@@ -26,7 +26,7 @@ if(isset($_POST['operacion'])){
 
 
 }
-
+// prueba para ver si retona el json
 /* $p = new Publisher();
 $cons = $p->buscarPublisherSH(["_publisher_id" => 2]);
 echo json_encode($cons); */
