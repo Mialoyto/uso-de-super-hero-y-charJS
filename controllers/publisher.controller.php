@@ -16,16 +16,12 @@ if(isset($_GET['operacion'])){
     $consulta = $publisher->buscarPublisherSH(["_publisher_id" => $_GET["_publisher_id"]]);
     echo json_encode($consulta);
   }
+
+
   
 }
 
 
-if(isset($_POST['operacion'])){
-
-  $publisher = new Publisher();
-
-
-}
 // prueba para ver si retona el json
 /* $p = new Publisher();
 $cons = $p->buscarPublisherSH(["_publisher_id" => 2]);

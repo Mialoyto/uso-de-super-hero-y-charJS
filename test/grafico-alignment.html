@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="width: 70%; margin: auto">
+      <canvas id="lienzo"> </canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const lienzo = document.querySelector("#lienzo");
+      const grafico = new Chart(lienzo, {
+        type: "bar",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "ALIGNMENT",
+              data: [],
+            },
+          ],
+        },
+      });
+
+      (function () {
+        fetch(
+          `../controllers/alignmet.controller.php?operacion=getResumenAlignment`
+        )
+          .then((respuesta) => respuesta.json())
+          .then((datos) => {
+            console.log(datos);
+
+            grafico.data.labels = datos.map((registro) => registro.alignment);
+            grafico.data.datasets[0].data = datos.map(
+              (registro) => registro.total
+            );
+            grafico.data.labels[[0]] = "N/A";
+          })
+          .catch((e) => {
+            console.log("Error al retornar datos", e);
+          });
+      })();
+    </script>
+  </body>
+</html>
