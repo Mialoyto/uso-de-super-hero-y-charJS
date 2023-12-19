@@ -17,8 +17,8 @@
       <div class="card-body">
         <form action="">
           <div class="mb-3">
-            <label for="publisher" class="form-lable">PUBLISHER :</label>
-            <select name="publisher" id="publisher_id" class="form-control form-select shadow" required>
+            <label for="_publisher_id" class="form-label">PUBLISHER :</label>
+            <select name="" id="_publisher_id" class="form-control form-select shadow" required>
               <option value="">SELECIONAR</option>
             </select>
           </div>
@@ -49,27 +49,18 @@
       function $(id) {
         return document.querySelector(id)
       }
-      //para la etiqueta select
+      // Para la etiqueta select
       (function() {
-        // const publisher_id = $("#publisher_id").value
-        // const tabla = $("tabla");
 
-        fetch(`../controllers/publihser.controller.php?operacion=listar`)
+        fetch(`../controllers/publisher.controller.php?operacion=listar`)
           .then(respuesta => respuesta.json())
           .then(datos => {
-            /*               console.log(datos);
-
-                          console.log(datos); */
-
-            // const tabla = $("#tabla")
 
             datos.forEach(datos => {
-              console.log(datos);
-
               const tagOption = document.createElement("option")
               tagOption.value = datos.id
               tagOption.textContent = datos.publisher_name
-              $("#publisher_id").appendChild(tagOption)
+              $("#_publisher_id").appendChild(tagOption)
             });
           })
           .catch(e => {
@@ -77,44 +68,40 @@
           })
       })();
 
-
-      // crear tabla usando una funcion autoejecutable
-
+      // Crear tabla usando una funcion autoejecutable
       (function() {
-        const publisherID =document.querySelector('#publisher_id')
-        publisherID.addEventListener('change', (event) =>{
-          const publisher_id =event.target.value;
-        })
+        const publisherId = $('#_publisher_id')
+        publisherId.addEventListener('change', function() {
+          const id = publisherId.value
 
-        fetch(`../controllers/publisher.controller.php?operacion=search`, {
-          })
+          fetch(`../controllers/publisher.controller.php?operacion=search&_publisher_id=${id}`)
+            .then(respuesta => respuesta.json())
+            .then(datos => {
 
-          .then(respuesta => respuesta.json())
+              console.log(datos)
+              const tabla = $("#tabla");
 
-          .then(datos => {
-
-            console.log(datos)
-          })
-
-          .catch(e => {
-            console.error(e)
-          })
-      })
-    })
-  </script>
-
-
-  <!-- /*                 const row = document.createElement("tr");
+              datos.forEach(datos => {
+                const row = document.createElement("tr");
                 row.innerHTML = `
+                <td>${datos.superhero_name}</td>
+
                             <td>${datos.superhero_name}</td>
                             <td>${datos.full_name}</td>
                             <td>${datos.gender}</td>
                             <td>${datos.race}</td>
-                        `
-                tabla.appendChild(row); */ -->
+                        `;
+                tabla.appendChild(row);
+
+              });
+            })
+            .catch(e => {
+              console.error("Error en la consulta!", e)
+            })
+        });
+      })();
+    })
+  </script>
 </body>
-
-
-
 
 </html>

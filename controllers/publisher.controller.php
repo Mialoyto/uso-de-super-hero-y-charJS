@@ -13,7 +13,7 @@ if(isset($_GET['operacion'])){
 
   
   if($_GET['operacion']== 'search'){
-    $consulta = $publisher->buscarPublisherSH(["publisher_id" => $_GETT["publisher_id"]]);
+    $consulta = $publisher->buscarPublisherSH(["_publisher_id" => $_GET["_publisher_id"]]);
     echo json_encode($consulta);
   }
   
@@ -27,7 +27,12 @@ if(isset($_POST['operacion'])){
 
 }
 
+/* $p = new Publisher();
+$cons = $p->buscarPublisherSH(["_publisher_id" => 2]);
+echo json_encode($cons); */
+
 
 /* $p = new Publisher();
 $cons = $p->getAll();
 echo json_encode($cons); */
+

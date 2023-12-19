@@ -4,39 +4,33 @@ class Publisher extends Conexion
 {
   private $pdo;
 
-  public function __construct(){
+  public function __construct()
+  {
     $this->pdo = parent::getConexion();
   }
 
-  function getAllPublisher($data = [])
+  public function getAllPublisher()
   {
     try {
       $consulta = $this->pdo->prepare("CALL spu_publisher_listar()");
-      $consulta->execute(
-        
-      );
+      $consulta->execute();
+
       return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
       die($e->getMessage());
     }
   }
 
-  function buscarPublisherSH($data = [])
+  public function buscarPublisherSH($data = [])
   {
     try {
       $consulta = $this->pdo->prepare("CALL spu_publisher_search(?)");
       $consulta->execute(
-        array($data['publisher_id'])
+        array($data['_publisher_id'])
       );
       return $consulta->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
       die($e->getMessage());
     }
   }
 }
-
-
-/* $p = new Publisher();
-$cons = $p->listarPublisher($data);
-echo json_encode($cons);
- */
