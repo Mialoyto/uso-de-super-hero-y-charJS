@@ -49,57 +49,72 @@
       function $(id) {
         return document.querySelector(id)
       }
-
-      function Publisher() {
-        const publisher_id = $("#publisher_id").value
+      //para la etiqueta select
+      (function() {
+        // const publisher_id = $("#publisher_id").value
         // const tabla = $("tabla");
 
-        if (publisher_id != "") {
+        fetch(`../controllers/publihser.controller.php?operacion=listar`)
+          .then(respuesta => respuesta.json())
+          .then(datos => {
+            /*               console.log(datos);
 
-          const parametros = new FormData();
-          parametros.append("operacion", "listar");
-          parametros.append("publisher_id", publisher_id)
+                          console.log(datos); */
 
+            // const tabla = $("#tabla")
 
-          fetch(`../controllers/publihser.controller.php`, {
-              method: "POST",
-              body: parametros
-
-            })
-            .then(respuesta => respuesta.json())
-            .then(datos => {
+            datos.forEach(datos => {
               console.log(datos);
 
-              console.log(datos);
+              const tagOption = document.createElement("option")
+              tagOption.value = datos.id
+              tagOption.textContent = datos.publisher_name
+              $("#publisher_id").appendChild(tagOption)
+            });
+          })
+          .catch(e => {
+            console.error(e)
+          })
+      })();
 
-              const tabla = $("#tabla")
 
-              datos.forEach(datos => {
+      // crear tabla usando una funcion autoejecutable
 
-                const tagOption = document.createElement("option")
-                tagOption.value = datos.publisher_id
-                tagOption.textContent = datos.publisher
-                $("#publisher_id").appendChild(tagOption)
+      (function() {
+        const publisherID =document.querySelector('#publisher_id')
+        publisherID.addEventListener('change', (event) =>{
+          const publisher_id =event.target.value;
+        })
 
-                const row = document.createElement("tr");
+        fetch(`../controllers/publisher.controller.php?operacion=search`, {
+          })
+
+          .then(respuesta => respuesta.json())
+
+          .then(datos => {
+
+            console.log(datos)
+          })
+
+          .catch(e => {
+            console.error(e)
+          })
+      })
+    })
+  </script>
+
+
+  <!-- /*                 const row = document.createElement("tr");
                 row.innerHTML = `
                             <td>${datos.superhero_name}</td>
                             <td>${datos.full_name}</td>
                             <td>${datos.gender}</td>
                             <td>${datos.race}</td>
                         `
-                tabla.appendChild(row);
-              });
-
-            })
-            .catch(e => {
-              console.error(e)
-            })
-        }
-      };
-
-    })
-  </script>
+                tabla.appendChild(row); */ -->
 </body>
+
+
+
 
 </html>
